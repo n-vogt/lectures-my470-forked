@@ -175,6 +175,9 @@ address(y)
 
 <br>
 
+- objects generally immutable in R vs eg lists in Python. Everything in R pretty much is immutable. 
+- 
+
 - Can check this in Python as well with `id()`:
 
 ```{Python}
@@ -198,6 +201,7 @@ names(y)      # Names
 dim(y)        # Dimensions
 ```
 
+- double is R's version of a float
 
 ## Viewing Objects in Your Global Environment and Removing Them
 
@@ -209,8 +213,13 @@ ls()
 ```
 
 <br>
-
-- Remove objects from your current environment
+- ls() to see all your objects in your current environment
+- Remove objects from your current environment using rm()
+- functions should be locally scoped in python. Shoudl refer only to things that are defined
+  - function should refer only to things that are defined in its input or in the internals of the function
+  - ... 
+  - unlke in Python, you dont execute an entire script from top to bottom but can do it line by line
+  - important 
 
 ```{r, eval = TRUE, echo = TRUE}
 rm(x)
@@ -233,6 +242,8 @@ rm(list = ls())    # Remove all
 
 <br>
 
+- data frame as a tack of lists, lists have to be of the same length
+
 http://adv-r.had.co.nz/Data-structures.html
 
 More extensive lists e.g. here: https://cran.r-project.org/doc/manuals/r-release/R-lang.html
@@ -252,7 +263,8 @@ More extensive lists e.g. here: https://cran.r-project.org/doc/manuals/r-release
 | tuple            |       -      |
 | set              |       -      |
 
-
+- but be careful with these because characters work a little bit differently than str in Python 
+- named vs unnamed list
 
 ## Vectors in R
 
@@ -284,7 +296,7 @@ https://r4ds.had.co.nz/vectors.html
 | `2`, `15.5`       | numeric: double | 
 | `TRUE`, `FALSE` | logical |
 
-
+- in R, if you do not add the L at the end, then it will default to double.
 
 ## Special values
 
@@ -304,6 +316,8 @@ https://r4ds.had.co.nz/vectors.html
 ```
 
 ## Examples 
+
+- c() used to construct a vector and then save that vector as an object.
 
 Use the `c()` function to concatenate observations into a vector
 
@@ -434,6 +448,8 @@ x["element1"]
 
 Caveat: Although this looks somewhat like a Python dictionary, recall that vectors can only store single types
 
+- much less flexible, cannot blend types, could not be 1, 2 and then some complicated data structure
+
 ## Vector Subsetting in R
 
 - Logical subsetting
@@ -445,6 +461,8 @@ logical_vec <- c(TRUE, FALSE)
 logical_vec
 char_vec[logical_vec]
 ```
+
+- only get hello but not world, because the second index is FALSE. 
 
 ## Vector Operations
 
@@ -561,6 +579,11 @@ my_list$another_thing
 - Next, we will discuss tabular data in more detail
 - A `matrix` arranges data from a vector into a tabular form, **all elements have to be of the same type**
 - `Arrays` have more than 2 dimensions
+
+- regression is matrix algebra
+
+- when you can, vectorise 
+- work with copilot in R 
 
 ```{r}
 my_matrix <- matrix(data = 1:100, nrow = 10, ncol = 10)
@@ -795,6 +818,9 @@ sqrt(mean(as.numeric(x)))
 
 ## Loops Revisited: Apply Functions {.smaller}
 
+- much more efficient than using a loop in R, the apply functions vs for loops 
+- apply function broadly over data structure
+
 - Another very frequently used approach in R is to replace loops with `apply`
 - It applies a function to every column, row, element of a vector, list, etc.
 - Apply exists in Python too, for example `map()` or `df.apply()` in `pandas`
@@ -812,6 +838,15 @@ apply(X = x, MARGIN = 2, FUN = max)
 
 
 ## Object Oriented Programming in R
+
+- in Python classes and methods are the bread and butter of everything you do. 
+- in R, this is not really the case, it is functions that are the bread and butter you do
+- anytime you want to change data or manipulate data, everyting should be wrapped into functions -> keeps workspace clean
+everything properly scoped.
+- in R, import your own functions as modules just like in Python
+- want to run entire R script and for your workspace to never change, stay entirely clean
+- best way: never save anything to your environment other than the functions you are going to use, this is where you want to get to for 
+functional programming
 
 - "Everything that exists in R is an object" (John Chambers)
 
