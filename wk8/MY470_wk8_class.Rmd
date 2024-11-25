@@ -78,7 +78,7 @@ a && b
 # Short-circuit OR
 a || b
 # Element-wise AND
-a & b
+a & b # we dont use this in Python
 # Element-wise OR
 a | b
 ```
@@ -88,7 +88,7 @@ a | b
 Python
 ``` python
 # 1, 2, [...] 10
-range(1, 11)
+range(1, 11) 
 # List of numeric type
 x = [2, 3, 0, 6]
 # Updating at an index
@@ -97,7 +97,7 @@ x[i] = 5
 R
 ``` R
 # 1, 2, [...] 10
-seq(10)
+seq(10) # includes 10, index from 1
 1:10
 # List of numeric type
 x <- c(1, 2.0, 4, 5)
@@ -123,7 +123,7 @@ x <- c(1, 2, 3, "four")
 
 typeof(x)
 # Output
-"character"
+"character" # can only contain elements of the same type, forced into the common type, the whole vector would become vector of type character
 ```
 
 All attributes (labeled values you can attach to an object) except names (labels) are removed.
@@ -131,7 +131,7 @@ All attributes (labeled values you can attach to an object) except names (labels
 Note that numbers are stored as doubles (floats) by default in R. If you want to save a number as an integer, you need to use the suffix ```L```. This is shown below.
 
 ``` R
-x <- c(1L, 2L, 3L)
+x <- c(1L, 2L, 3L) # L denotes integer, otherwise defaults to double
 ```
 
 ## Indexing
@@ -145,7 +145,9 @@ I save a list of these dates in the variable `dates_list`.
 - **Q1.** In Python, what date would I get if I ran ```dates_list[2]```
 
 - **Q2.** What would I get in R for ```dates_list[2]```?
-
+list in R is a dict in python
+arrays part of core R, in Python import pandas
+data types the most confusing difference
 
 ```{r}
 # Lists in R are similar to dictionaries in Python
@@ -202,18 +204,22 @@ math_scores
 
 
 ## Data Frames
-
+Lists in R are similar to dict in Python
 ```{r}
 my_dataframe <- data.frame(title = c("Dr", "Prof", "Prof"),
                          lname = c("Strangelove", "Moriarty", "Farnsworth"),
                          favenum = c(13 , 99, 144))
 
-my_dataframe$fname <- c("", "James", "Hubert") 
+my_dataframe$fname <- c("", "James", "Hubert") # creating a new column and adding its values
 
 print(my_dataframe)
 ```
 
-
+-4:5 in python counting from the back vs excluding those elements in R
+- which returns true false vector, if you feed result of true false vector, can subset values of maths scores
+- data frames real power of R
+- vectorisation, have to look up the function in R, know what they are named vs write it yourself in Python using loops?
+- weak discipline in R
 
 ## Control Flow
 
@@ -234,6 +240,10 @@ if (x < y) {
 } # the code in the curly brackets will run if the conditional statement is true
 
 ```
+
+- 
+
+
 
 ```{r}
 # For and while loops work pretty much the same way.
@@ -262,6 +272,9 @@ for (i in 1:length(chr_vec)) { # for i in range(0, len(chr_vec))
 }
 ```
 
+- length vs len
+- no native way to write docstrings in Python, have to use roxygen library, interprets comments in certain ways
+
 ## Functions
 
 
@@ -276,7 +289,7 @@ for (i in 1:length(chr_vec)) { # for i in range(0, len(chr_vec))
 #' Short title for function
 #'
 #' Longer description of the function
-class_fits <- function(num_teachers = 1, num_students, room_size) {
+class_fits <- function(num_teachers = 1, num_students, room_size) { # can have default parameters before non default ones, would raise an error in python
     if (num_teachers + num_students < room_size) {
         print("Hooray! The room is big enough")
     } else {
@@ -289,6 +302,11 @@ class_fits(2, 13, 18)
 # Or not, because we supplied a default for teachers
 class_fits(num_students = 18, room_size = 19)
 ```
+
+
+- indentation is optional but preferred
+- 
+
 
 ### Pipe Operator
 
@@ -313,6 +331,10 @@ x %>% log() %>%
 # NOTE: You don't need to include the brackets (i.e. log()) here,
 # but doing so increases the legibility of your code.
 ```
+
+- x = feeds into
+- tidyverse library required for pipe operator, pipe from dplyr
+
 
 ##  Recap: Terminology in R
 
@@ -356,8 +378,30 @@ for i in range(1, 101):
         ls.append(i)
 print(ls)
 ```
-
+- NA is the equivalent of None in R
+- looping not efficient in R (same in Python, use list comprehensions instead), in R use functions that vectorise these operations
 _Your cell here._
+```{r}
+
+ls = list()
+for (i in 1:length(100)) {
+  ls <- c(ls, i)
+  if (i %% 3 == 0) 
+  {ls <- c(ls, "None")
+  }
+}
+ls
+
+ls <- rep(0) # specifies type
+# more efficient
+ls1 <- 1:100
+# now replace the elements, if you knwo the functions, then clear and easy
+ls1 <- ifelse(ls1%%3==0, NA, ls1) # given the ls1, for every element, check whether divisible by 3, if yes, give me NA, otherwise give me that element, here operating on vectors, not on elements
+# 
+ls1
+# everything is a vector
+```
+
 
 ```python
 # Exercise 2: Sum the even integers from the list below.
@@ -370,8 +414,13 @@ for i in lst:
         summ += i
 print(summ)
 ```
+```{r}
+v1 <- c(1, 3, 2, 4.5, 7, 8, 10, 3, 5, 4, 7, 3.33)
+sum(v1[v1 %% 2 == 0]). #True False Statement, subsetting to only get the TRUEs, 
+```
 
-_Your cell here._
+_Your cell_
+
 
 ### Function Exercises
 
@@ -393,8 +442,37 @@ zerolist = zero_list(mylist)
 print(mylist)
 print(zerolist)
 ```
+Popular Vote, first column 
+//*[@id="mw-content-text"]/div[1]/table[1]/tbody/tr[5]/td/table/tbody/tr[8]/th
+//*[@id="mw-content-text"]/div[1]/table[1]/tbody/tr[5]/td/table/tbody/tr[8]/th
+
+Second column, first candidate, popular vote 
+//*[@id="mw-content-text"]/div[1]/table[1]/tbody/tr[5]/td/table/tbody/tr[8]/td[1]/b
+//*[@id="mw-content-text"]/div[1]/table[1]/tbody/tr[5]/td/table/tbody/tr[8]/td[1]/b
+
+second candidate
+//*[@id="mw-content-text"]/div[1]/table[1]/tbody/tr[5]/td/table/tbody/tr[8]/td[2]
+//*[@id="mw-content-text"]/div[1]/table[1]/tbody/tr[5]/td/table/tbody/tr[8]/td[2]
+
+#mw-content-text > div.mw-content-ltr.mw-parser-output > table.infobox.ib-election.infobox-table.vevent > tbody > tr:nth-child(5) > td > table > tbody > tr:nth-child(8) > td:nth-child(3)
+#mw-content-text > div.mw-content-ltr.mw-parser-output > table.infobox.ib-election.infobox-table.vevent > tbody > tr:nth-child(5) > td > table > tbody > tr:nth-child(8) > td:nth-child(3)
+-> info box key word 
+#mw-content-text > div.mw-content-ltr.mw-parser-output > table.infobox.ib-election.infobox-table.vevent > tbody > tr:nth-child(5) > td > table > tbody > tr:nth-child(8) > th
 
 _Your cell here._
+```{r}
+zero_vect <- function(a) { # always takes a vector
+  newvector <- integer(length(a))
+  return(newvector) # return statement in R has brackets, 
+}
+
+v <- c(1, 2, 3)
+zerov <- zero_vect(v)
+print(zerov) # return integer 0s
+class(zerov)
+
+```
+
 
 ```python
 # Exercise 4
@@ -414,6 +492,17 @@ print_professions(scientists)
 ```
 
 _Your cell here._
+```{r}
+
+# names of each data point are the names of the scientistts
+# thus have to create two lists, one for professions and the other names(list) = names of the scientists
+paste() # vectorised version
+# each element now is a string in the output
+# have to think in loops in R, here the loop is implied. 
+
+
+```
+
 
 ### Vectorizing Exercises
 
@@ -435,6 +524,18 @@ lst = [1, 3, 2, 4.5, 7, 8, 10, 3, 5, 4, 7, 3.33]
 ans = [i**2 for i in lst if type(i) == int] 
 ```
 _Your cell here._
+```{r}
+# only the elements that are integers, in R the way it works, if you have vector, all elements have to be of the same type in vectors in r, have to force them into double
+# cannot check whether they are integers, will all be forced into integers
+# to check whether it is integer: divide it by 1, the remainder would be 0, subset all the elements where the remainder is 0
+# lst[lst && 1 == 0]
+# or
+lst <- c(1L, 3L, 2L, 4.5, 7L, 8L, 10L, 3L, 5L, 4L, 7L, 3.33)
+lst[!lst %% 1]^2 # not operator: if not true, then it means that it is false, if we divide by 1, the r
+
+
+```
+
 
 ```python
 # Exercise 6: Using the function ifelse(), replicate the list comprehension below
@@ -474,6 +575,11 @@ mydframe
 
 ## Apply Functions
 
+- ?apply
+- sapply (simple), lapply (apply to list), tapply(array)
+- here everything vectorised, can add two vectors, get elemetn wise addition, 
+- apply function, given my vector, apply FUN function, MARGIN: if 1 applied to column, if 2 applied to the row
+
 The apply family functions in R are a well-known set of R functions that allows you to perform complex tasks over arrays, avoiding the use of for-loops. They run a loop in C (a lower level language), which means they are pretty quick. You can do this in several ways, depending on the value you specify to the MARGIN argument, that can be normally set to 1, 2 or c(1, 2). 
 
 The syntax of the apply command is:
@@ -484,8 +590,10 @@ apply(X,       # Array, matrix or data frame
       FUN,     # Function to be applied
       ...)     # Additional arguments to FUN
 ```
-
-
+- bring a pen 
+- in week 10, material from week 9, lecture from week 10 also helps and then we do it on Tuesday, 
+- more theoretical, evaluate it
+- penalise for conceptual errors, not for synatx errors 
 ```{r}
 some_vector <- c(1, 2, 5)
 
